@@ -55,3 +55,8 @@ Limitations:
 ------------
 
 You can't use delay once the begin() method has been called because it stops the system timer interrupt to avoid loosing monitor sync.  The object uses a massive amount of memory, there are two frame buffers each addresses 8x8 pixel chunks of the 640x480 display so there are 4800 bytes per screen, a total of 9600 bytes.  This leaves just over 6kB for your other code which is fine for a lot of applications but bear this in mind.
+
+Installing:
+-----------
+
+The best way to install this from GitHub is click the "Download this repository as a zip" button on the left of the bar above.  Unzip the folder into your MPIDE installation in hardware/pic32/libraries/.  Restart MPIDE after you've done this (if it was running) and the pong2 example should appear in the examples list.
