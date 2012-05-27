@@ -1,0 +1,57 @@
+VGALib
+======
+
+VGAlib for ChipKIT UNO32.  Not a lot of documentation at the moment.  Take a look at the example which uses all the currently available features.
+
+Author:
+-------
+
+Copyright Nathan Dumont 2012
+nathan@nathandumont.com
+
+License:
+--------
+
+GPL v3
+
+Usage:
+------
+
+VGAOutput screen;
+
+void setup() {
+  screen.begin(); // start up VGA
+}
+
+void loop() {
+  // do your loop drawing here
+
+  // finally show what you've just drawn (this blocks until the screen has switched frame buffers)
+  screen.flip();
+}
+
+Drawing:
+--------
+
+There are 4 drawing functions available at the moment:
+
+line(int x1, int y1, int x2, int y2, char colour)
+
+Draws a line on the screen from x1,y1 to x2,y2.  Colour is the 8 bit value that specifies the output to the DAC the format is rrrgggbb so 0xe0 is red or 0x03 is blue etc.
+
+fill(char colour)
+
+This just fills the whole screen with the specified colour, see above for format
+
+setPixel(int x, int y, char colour)
+
+Sets a single pixel to colour.
+
+blit(int x, int y, int width, int height, char *source)
+
+Copies an area width by height from source onto the screen with the top left at x, y.  The source should be a vector with each line at width pixel spacing and at least height.  Usually you'll want to declare it as a const char [], this means it will be stored only in Flash memory and never copied into RAM (because there isn't enough!).
+
+Limitations:
+------------
+
+You can't use delay once the begin() method has been called because it stops the system timer interrupt to avoid loosing monitor sync.  The object uses a massive amount of memory, there are two frame buffers each addresses 8x8 pixel chunks of the 640x480 display so there are 4800 bytes per screen, a total of 9600 bytes.  This leaves just over 6kB for your other code which is fine for a lot of applications but bear this in mind.
